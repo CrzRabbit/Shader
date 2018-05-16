@@ -1,0 +1,47 @@
+Shader "Shader学习/剔除.深度测试.Alpha测试.基本雾效/简单的植被shader"
+{
+    Properties
+    {
+        _Color("主颜色", Color) = (1, 1, 1, 0)
+        _MainTex("基础纹理", 2D) = "white" {}
+        _CutOff("Alpha测试阈值", Range(0, 1)) = 0.5
+    }
+
+    SubShader
+    {
+        Material
+        {
+            Diffuse [_Color]
+            Ambient [_Color]
+        }
+
+        Lighting On
+
+        Cull Off
+
+        Pass
+        {
+            AlphaTest Greater [_CutOff]
+            SetTexture [_MainTex]
+            {
+                combine texture * primary, texture
+            }
+        }
+
+        Pass
+        {
+            ZWrite Off
+
+            ZTest Less
+
+            AlphaTest LEqual [_CutOff]
+
+            Blend SrcAlpha OneMinusSrcAlpha
+
+            SetTexture [_MainTex]
+            {
+                combine texture * primary, texture
+            }
+        }
+    }
+}

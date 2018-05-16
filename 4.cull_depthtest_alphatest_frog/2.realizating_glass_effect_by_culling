@@ -1,0 +1,47 @@
+Shader "Shader学习/剔除.深度测试.Alpha测试.基本雾效/用剔除实现玻璃效果"
+{
+    Properties
+    {
+        _Color("主颜色", Color) = (1, 1, 1, 0)
+        _SpecColor("高光颜色", Color) = (1, 1, 1, 1)
+        _Emission("光泽颜色", Color) = (0, 0, 0, 0)
+        _Shininess("光泽度", Range(0.01, 1)) = 0.7
+        _MainTex("基础材质", 2D) = "white" {}
+    }
+
+    SubShader
+    {
+        Materials
+        {
+            Diffuse [_Color]
+            Ambient [_Color]
+            Specular [_SpecColor]
+            Emission [_Emission]
+            Shininess [_Shininess]
+        }
+        //开启光照
+        Lighting On
+        //开启独立镜面反射
+        SeparateSpecular On
+        //开启透明度混合
+        Blend SrcAlpha OneMinusSrcAlpha
+
+        Pass
+        {
+            Cull Front
+            SetTexture [_MainTex]
+            {
+                combine Primary * Texture
+            }
+        }
+
+        Pass
+        {
+            Cull Back
+            SetTexture [_MainTex]
+            {
+                combine Primary * Texture
+            }
+        }
+    }
+}

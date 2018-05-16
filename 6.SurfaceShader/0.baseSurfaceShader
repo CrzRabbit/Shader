@@ -1,0 +1,25 @@
+Shader "Shader学习/SurfaceShader/baseSurfaceShader"
+{
+    SubShader
+    {
+        Tags {"RenderType" = "Opaque"}
+
+        CGPROGRAM
+
+        #program surface surf Lambert
+
+        struct Input
+        {
+            float4 color: COLOR;
+        };
+
+        void surf(Input IN, inout SurfaceOutput o)
+        {
+            o.Albedo = float3(0.5, 0.8. 0.3);
+        }
+
+        ENDCG
+    }
+
+    Fullback "Diffuse"
+}

@@ -1,0 +1,32 @@
+Shader "Shader学习/三种形态&混合操作/基本混合+顶点光照"
+{
+    Properties
+    {
+        _MainTex("基础纹理", 2D) = "black" {}
+        _Color("主颜色", Color) = (1, 1, 1, 0)
+    }
+
+    SubShader
+    {
+        Tags{"Queue" = "Transparent"}
+
+        Pass
+        {
+            Material
+            {
+                _Diffuse [_Color]
+                _Ambient [_Color]
+            }
+
+            Lighting On
+
+            Blend One OneMinusDstColor
+
+            SetTexture [_MainTex]
+            {
+                constantColor [_Color]
+                combine constant lerp(texture) previous
+            }
+        }
+    }
+}

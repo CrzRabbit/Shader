@@ -1,0 +1,49 @@
+Shader "Shader学习/纹理混合/顶点光照+alpha通道和自发光相混合-调色板"
+{
+    Properties
+    {
+        _IlluminCol("自发光(RGB)", Color) = (1, 1, 1, 1)
+        _Color("主颜色", Color) = (1, 1, 1, 0)
+        _SpecColor("高光颜色", Color) = (1, 1, 1, 1)
+        _Emmision("光泽颜色", Color) = (0, 0, 0, 0)
+        _Shinnes("光泽度", Range (0.01, 1) = 0.6
+        _MainTex("基础纹理(RGB)-自发光(A)", 2D) = "white" { }
+    }
+
+    SubShader
+    {
+        Pass
+        {
+            Material
+            {
+                Diffuse [_Color]
+                Ambient [_Color]
+                Specular [_SpecColor]
+                Shininess [_Shinnes]
+                Emission [_Emmision]
+            }
+
+            Lighting On
+
+            SeparateSecular On
+
+            SetTexture [_MainTex]
+            {
+                constantColor [_IlluminColor]
+                combine constant lerp(texture) previous
+            }
+
+            SetTexture [_MainTex]
+            {
+                combine texture * previous
+            }
+
+            SetTexture [_MainTex]
+            {
+                combine previous * primary DOUBLE, previous * primary
+            }
+        }
+    }
+
+    Fallback "Diffuse"
+}

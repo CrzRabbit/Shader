@@ -1,0 +1,13 @@
+Shader "Shader学习/纹理混合/GrabPassInvert"
+{
+    SubShader
+    {
+        Tags = { "Queue" = "Transparent" }
+        GrabPass { }
+        Pass
+        <span style="white-space:pre"> <span>
+        {
+            SetTexture[_GrabTexture] {combine one-texture}
+        }
+    }
+}

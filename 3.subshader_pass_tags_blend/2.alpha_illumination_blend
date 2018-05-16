@@ -1,0 +1,31 @@
+Shader "Shader学习/纹理混合/alpha通道和自发光相混合"
+{
+    Properties
+    {
+        _MainTex("基础纹理(RGB)-自发光(A)", 2D) = "red" { }
+    }
+
+    SubShader
+    {
+        //[1]设置白色顶点光照
+        Material
+        {
+            Diffuse (1, 1, 1, 1)
+            Ambient (1, 1, 1, 1)
+        }
+        //[2]开启光照
+        Lighting On
+
+        //[3]alpha通道插值(1, 1, 1, 1)
+        SetTexture [_MainTex]
+        {
+            constantColor (1, 1, 1, 1)
+            combine constant lerp(texture) previous
+        }
+        //[4]相乘
+        SetTexture[_MainTex]
+        {
+            combine texture * previous
+        }
+    }
+}

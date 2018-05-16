@@ -1,0 +1,18 @@
+Shader "Shader学习/剔除.深度测试.Alpha测试.基本雾效/剔除"
+{
+    SubShader
+    {
+        Pass
+        {
+            Material
+            {
+                Diffuse (1, 1, 1, 1)
+                Emission (0.3, 0.3, 0.3, 0.3)
+            }
+
+            Lighting On
+
+            Cull Front
+        }
+    }
+}

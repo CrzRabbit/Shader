@@ -1,0 +1,9 @@
+======#program  surface...======
+#pragrma surface surfaceFunction lightMode[optionalparams]
+    1.surfaceFunction: 表明指定CG函数中有表面着色器的代码
+    2.lightMode: 光照模式,内置两种Lambert(diffuse) BlinnPhong(specular)
+可选参数:
+    3.alpha: Alpha混合模式,写半透明着色器
+    4.alphatest: VariableName :Alpha测试模式,写镂空着色器.VariableName(float)表明镂空大小
+    5.vertex: VertexFunction :自定义顶点函数
+    6.finalcolor: ColorFunction: 自定义最终颜色函数

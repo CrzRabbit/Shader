@@ -1,0 +1,24 @@
+Shader "Shader学习/三种形态&混合操作/基本纹理混合"
+{
+    Properties
+    {
+        _MainTex("基本纹理", 2D) = "white" {}
+        _Color("主颜色", Color) = (1, 1, 1, 0)
+    }
+
+    SubShader
+    {
+        Tags = {"Queue" = "Transparent"}
+
+        Pass
+        {
+            Blend One OneMinusDstColor
+
+            SetTexture [_MianTex]
+            {
+                constantColor [_Color]
+                combine constant lerp(texture) previous
+            }
+        }
+    }
+}

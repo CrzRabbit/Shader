@@ -1,0 +1,38 @@
+Shader "Shader学习/剔除.深度测试.Alpha测试.基本雾效/渲染物体背面"
+{
+    Properties
+    {
+        _Color("主颜色", Color) = (1, 1, 1, 0)
+        _SpecColor("高光颜色", Color) = (1, 1, 1, 1)
+        _Emission("光泽颜色", Color) = (0, 0, 0, 0)
+        _Shininess("光泽度", Range(0.01, 1) = 0.7
+        _MainTex("基础纹理", 2D) = "white" {}
+    }
+    SubShader
+    {
+        Pass
+        {
+            Material
+            {
+                Diffuse [_Color]
+                Ambient [_Color]
+                Emission [_Emission]
+                Specular [_SpecColor]
+                Shininess [_Shininess]
+            }
+
+            Lighting On
+
+            SetTexture [_MainTex]
+            {
+                combine Primary * Texture
+            }
+        }
+
+        Pass
+        {
+            Color (0, 0, 1, 1)
+            Cull Front
+        }
+    }
+}

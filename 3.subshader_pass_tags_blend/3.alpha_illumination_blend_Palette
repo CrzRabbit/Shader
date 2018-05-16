@@ -1,0 +1,35 @@
+Shader "Shader学习/纹理混合/alpha通道和自发光混合-调色板"
+{
+    Properties
+    {
+        _IlluminClo ("自发光(RGBA)", Color) = (1, 1, 1, 1)
+        _MainTex ("基础纹理(RGB)-自发光(A)", 2D) = "white" { }
+    }
+
+    SubShader
+    {
+        Pass
+        {
+            Material
+            {
+                Diffuse (1, 1, 1, 1)
+                Ambient (1, 1, 1, 1)
+            }
+
+            Lighting On
+
+            SetTexture [_MainTex]
+            {
+                constantColor [_IlluminClo]
+                combine constant lerp(texture) previous
+            }
+
+            SetTexture [_MainTex]
+            {
+                combine texture * previous
+            }
+        }
+    }
+
+    Fallback "Diffuse"
+}

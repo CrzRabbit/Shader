@@ -1,0 +1,19 @@
+Shader "Shader学习/三种形态&混合操作/基本纹理载入"
+{
+    Properties
+    {
+        _MainTex("基础纹理", 2D) = "black" {}
+    }
+
+    SubShader
+    {
+        Tags = {"Queue" = "Geometry"}
+        Pass
+        {
+            SetTexture [_MainTex]
+            {
+                combine texture
+            }
+        }
+    }
+}

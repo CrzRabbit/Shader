@@ -1,0 +1,19 @@
+Shader "Shader学习/剔除.深度测试.Alpha测试.基本雾效/基本alpha测试"
+{
+    Properties
+    {
+        _MainTex("基础纹理", 2D) = "white" {}
+    }
+
+    SubShader
+    {
+        Pass
+        {
+            AlphaTest Greater 0.6
+            SetTexture [_MainTex]
+            {
+                combine texture
+            }
+        }
+    }
+}

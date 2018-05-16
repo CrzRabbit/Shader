@@ -1,0 +1,32 @@
+Shader "Shader学习/SurfaceShader/surfaceShader_Palette"
+{
+    Properties
+    {
+        _Color("MainColor", Color) = (0.5, 0.8, 0.4, 1)
+    }
+
+    SubShader
+    {
+        Tags {"RenderType" = "Opaque"}
+
+        CGPROGRAM
+
+        #program surface surf Lambert
+
+        float4 _Color;
+
+        struct Input
+        {
+            float3 Color: COLOR;
+        };
+
+        void surf(Input IN, inout SurfaceOutput o)
+        {
+            o.Albedo = _Color.rgb;
+            o.Alpha = _Color.a;
+        }
+        ENDCG
+    }
+
+    Fullback "Diffuse"
+}

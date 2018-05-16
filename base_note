@@ -1,0 +1,161 @@
+======Properties Block======
+1.name("display name", Range(min, max) = number
+    浮点属性
+2.name("dispaly name", Color) = (number, number, number, number)
+    颜色RGBA
+3.name("dispaly name", 2D) = "name" {options}
+    2D纹理属性,options: TexGen纹理生成类型 | LightmapMode光照贴图模式
+4.name("display name", Rect) = "name" {options}
+    矩形纹理属性
+5.name("display name", Cube) = "name" {options}
+    立方体贴图纹理属性
+6.name("display name", Float) = number
+    浮点属性
+7.name("display name", Vector) = (number, number, number, number)
+    四个元素的容器
+
+======Pass Block======
+1.Color color
+    对象纯色
+2.Material {Material Block}
+    材质属性
+3.Lighting On|Off
+    是否开启光照,Material Block是否有效
+4.SaperateSpecular On|Off
+    开启独立镜面反射
+5.ColorMeterial AmbientAndDiffuse | Emmision
+    使用每个顶点的颜色代替材质中的颜色集,AmbientAndDiffuse代替阴影色和漫反射, Emission代替光发射值
+
+======Material Block======
+1.Diffuse Color(RGBA)
+    漫反射颜色,物体的基本颜色.
+2.Ambient Color(RGBA)
+    环境颜色构成,物体被RenderSetting中环境色照射时表现的颜色
+3.Specular Color(RGBA)
+    对象反射高光的颜色
+4.Shininess Number (eg:Range(0.01, 1))
+    加亮时的光泽度,0~1,0更像漫反射,1更小的光斑
+5.Emission Color(RGBA)
+    自发光颜色,不被光照射时物体的颜色
+
+FinalColor = Ambient * RenderSettings ambientsetting + (Light Color * Diffuse + Light Color * Specular) + Emission
+最终颜色 = 环境光反射颜色 * 渲染设置环境设置 + (灯光颜色 * 漫反射颜色 + 灯光颜色 * 镜面反射颜色) + 自发光颜色
+
+======Queue Tags======
+1.Background (1000)
+    后台,在所有队列之前被渲染,渲染天空盒
+2.Geometry  (2000)
+    几何体(默认),不透明的几何体
+3.Transparent (3000)
+    采用由后到前,任何采用alpha混合材质(玻璃,粒子效果)
+4.Overlay (4000)
+    叠加效果,最后渲染(镜头光晕等)
+
+各自队列使用后面的索引值由小到大: 标签 Tags {"Queue" = "Geometry + 1"} 2001 在Geometry后Transparent之前
+忽略投影标签: Tags {"IgnoreProjector" = "Ture"} 对于半透明物体直接忽略投影
+
+======LightMode Tags======
+Always: 总是渲染。没有运用光照。
+ForwardBase: 用于正向渲染,环境光、方向光和顶点光等
+ForwardAdd: 用于正向渲染，用于设定附加的像素光，每个光照对应一个pass
+PrepassBase: 用于延迟光照，渲染法线/镜面光。
+PrepassFinal:用于延迟光照，通过结合纹理，光照和自发光渲染最终颜色
+Vertex: 用于顶点光照渲染，当物体没有光照映射时，应用所有的顶点光照
+VertexLMRGBM: 用于顶点光照渲染，当物体有光照映射的时候使用顶点光照渲染。在平台上光照映射是RGBM 编码
+VertexLM: 用于顶点光照渲染，当物体有光照映射的时候使用顶点光照渲染。在平台上光照映射是double-LDR 编码（移动平台，及老式台式CPU）
+ShadowCaster: 使物体投射阴影。
+ShadowCollector: 为正向渲染对象的路径，将对象的阴影收集到屏幕空间缓冲区中。
+
+======SetTexture======
+Previous: 上一次SetTexture的结果
+Primary: 来自光照计算时的颜色或绑定时的顶点颜色
+Texture: SetTexture中定义的纹理颜色
+Constant: constantColor定义的颜色
+
+DOUBLE: 2倍
+QUAD: 四倍
+-: 取反
+alpha标签: 只取aplha通道
+
+matrix [MatrixPropertyName] 用矩阵变化纹理坐标
+
+======Culling & Depth Testing======
+1.Cull Back|Front|Off
+    Cull Back: 不绘制背离观察者的几何面
+    Cull Front: 不绘制面向观察者的几何面,用于由内至外的旋转物体
+    Cull Off: 显示所有面, 特殊效果
+2.ZWrite On|Off
+    将来自物体的像素写入深度缓存,绘制纯色物体打开,半透明物体关闭
+3.ZTest LEqual|Less|Greater|GEqual|Equal|NotEqual|Always
+
+4.Offset Factor,Units 定义深度偏移
+    Factor: Z缩放的最大斜率的值
+    Units: 可分辨的最小深度缓冲区的值
+
+======Fog======
+1.Fog {Fog Commands}
+
+2.Mode Off|Global|Liner|Exp|Exp2
+    默认Global
+3.Color ColorValue
+    雾的颜色
+4.Density FloatValue
+    指数表示雾的密度
+5.Range FloatValue1, FloatValue2
+    Liner中雾的距离
+
+======RenderType======
+1.Opaque:
+    用于大多数着色器（法线着色器、自发光着色器、反射着色器以及地形的着色器）。
+2.Transparent:
+    用于半透明着色器（透明着色器、粒子着色器、字体着色器、地形额外通道的着色器）。
+3.TransparentCutout:
+    蒙皮透明着色器（Transparent Cutout，两个通道的植被着色器）。
+4.Background:
+    Skybox shaders. 天空盒着色器。
+5.Overlay:
+    GUITexture, Halo, Flare shaders. 光晕着色器、闪光着色器。
+6.TreeOpaque:
+    terrain engine tree bark. 地形引擎中的树皮。
+7.TreeTransparentCutout:
+    terrain engine tree leaves. 地形引擎中的树叶。
+8.TreeBillboard:
+    terrain engine billboarded trees. 地形引擎中的广告牌树。
+9.Grass:
+    terrain engine grass. 地形引擎中的草。
+A.GrassBillboard:
+    terrain engine billboarded grass. 地形引擎何中的广告牌草。
+
+======Blend======
+1.Blend Off
+    关闭混合
+2.Blend SrcFactor DstFactor
+    配置并启动混合,新产生的颜色 * SrcFactor + 屏幕颜色 * DstFactor
+3.Blend SrcFactor DstFactor,SrcFactorA DstFactorA
+    将Alpha单独混合
+4.BlendOp Add|Sub|RevSub|Min|Max
+    Add: 相加
+    Sub: Src - Dst
+    RevSub: Dst -Src
+    Min: 最小
+    Max: 最大
+======Blend Factors======
+1.One
+    值为1,让源或者目标颜色全部通过
+2.Zero
+    值为0,删除源或者目标颜色
+3.SrcColor
+
+4.SrcAlpha
+
+5.DstColor
+
+6.DstAlpha
+
+7.OneMinusSrcColor
+
+8.OneMinusSrcAlpha
+
+9.OneMinusDstColor
+
+A.OneMinusDstAlpha
