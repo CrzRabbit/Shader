@@ -1,0 +1,52 @@
+Shader "Shader学习/SurfaceShader/tex_bump_detail_tint_rim"
+{
+    Properties
+    {
+        _MainTex("主纹理", 2D) = "white" {}
+        _BumpMap("凹凸纹理", 2D) = "bump" {}
+        _Detail("细节纹理", 2D) = "gray" {}
+        _ColorTint("光泽",Color) = (0.3, 0.6, 0.3, 0.6)
+        _RimColor("边缘颜色", Color) = (0.3, 0.2, 0.1, 0.5)
+        _RimPower("边缘颜色强度", Range(0.5, 8.0)) = 3.0
+    }
+
+    SubShader
+    {
+        Tags {"RenderType" = "Opaque"}
+
+        CGPROGMA
+
+        #progma surface surf finalcolor:setcolor
+
+        struct Input
+        {
+            float2 uv_MainTex;
+            float2 uv_BumpMap;
+            float2 uv_Detail;
+            float3 viewDir;
+        }
+
+        sampler2D _MainTex;
+        sampler2D _BumpMap;
+        sampler2D _Detail;
+        float4 _ColorTint;
+        float4 _RimColor;
+        float _RimPower;
+
+        void setcolor(Input IN, SurfaceOutput o, inout fixed4 color)
+        {
+            color *= _ColorTint;
+        }
+
+        void surf(Input IN, inout SurfaceOutput o)
+        {
+            o.Albedo = tex2D(_MainTex, IN.uv_MainTex).rgb;
+            o.Albedo *= text2D(_Detail, IN.uv_Detail).rgb * 2;
+            o.Normal = UnpackNormal(tex2D(_BumpMap, IN.uv_BumpMap))
+            float rim = 1 - saturate(dot(normalize(viewDir), o.Normal))
+            o.Emission = _RimColor.rgb * pow(rim, _RimPower)
+        }
+        ENDCG
+    }
+    Fullback "Diffuse"
+}

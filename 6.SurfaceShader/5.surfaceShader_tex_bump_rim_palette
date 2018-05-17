@@ -1,4 +1,54 @@
 Shader "Shader学习/SurfaceShader/surfaceShader_tex_bump_rim_palette"
 {
+    Properties
+    {
+        _MainTex("主纹理", 2D) = "white" {}
+        _BumpMap("凹凸纹理", 2D) = "bump" {}
+        _ColorTint("色泽", Color) = (0.3, 0.5, 0.3, 0.6)
+        _RimColor("边缘颜色", Color) = (0.2, 0.1, 0.4, 0.5)
+        _RimPower("边缘颜色强度", Range(0.5, 8.0)) = 3.0
+    }
 
+    SubShader
+    {
+        Tags {"RenderType" = "Opaque"}
+
+        CGPROGRAM
+
+        #program surface surf finalcolor:setcolor
+
+        stru    ct Input
+        {
+            float2 uv_MaintTex;
+            float2 uv_BumpMap;
+            float3 viewDir;
+        }
+
+        sampler2D _MainTex;
+        sampler2D _BumpMap;
+        float4 _ColorTint;
+        float4 _RimColor;
+        float _RimPower;
+
+        //自定义颜色函数setcolor编写
+
+        void setcolor(Input IN, SurfaceOutput o, inout fiexd4 color)
+        {
+            color *= _ColorTint
+        }
+
+        void surf(Input IN, inout SurfaceOutput o)
+        {
+            o.Albedo = tex2D(_MainTex, IN.uv_MainTex).rgb;
+
+            o.Normal = UnpackNormal(tex2D(_BumpMap, IN.uv_BumpMap));
+
+            float rim = 1 - saturate(dot(normalize(viewDir), o.Normal));
+
+            o.Emission = _RimColor.rgb * pow(rim, _RimPower);
+
+        }
+        ENDCG
+    }
+    Fullback "Diffuse"
 }
