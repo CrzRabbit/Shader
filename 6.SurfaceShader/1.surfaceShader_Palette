@@ -28,5 +28,5 @@ Shader "Shader学习/SurfaceShader/surfaceShader_Palette"
         ENDCG
     }
 
-    Fullback "Diffuse"
+    Fallback "Diffuse"
 }

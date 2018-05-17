@@ -30,5 +30,5 @@ Shader "Shader学习/SurfaceShader/surfaceShader_tex_bump"
         }
         ENDCG
     }
-    Fullback "Diffuse"
+    Fallback "Diffuse"
 }

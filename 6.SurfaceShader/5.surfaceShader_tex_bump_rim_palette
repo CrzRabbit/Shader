@@ -50,5 +50,5 @@ Shader "Shader学习/SurfaceShader/surfaceShader_tex_bump_rim_palette"
         }
         ENDCG
     }
-    Fullback "Diffuse"
+    Fallback "Diffuse"
 }

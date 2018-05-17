@@ -1,0 +1,21 @@
+======Lighting Mode Func======
+0.half4 LightingName(SurfaceOutput s, half3 lightDir, half atten)
+    表示在正向渲染路径(forward rending path)中的光照模式,此函数不取决于视图方向(view direction) Diffuse
+1.half4 LightingName(SurfaceOutput s, half3 lightDir, half3 viewDir, half atten)
+    表示在正向渲染路径(forward rending path)中的光照模式,此函数包含了视图方向(view direction)
+2.half4 LightingName_PrePass(SurfaceOutput s, half3 light)
+    在延时光照路径(deferred lighting paht)中使用.
+3.half4 LightingName_DirLightmap(SurfaceOutput s, fixed4 color, fixed4 scale, bool surfFuncWritesNormal)
+    不取决于视图方向,自动处理正向和延时光照路径
+4.half4 LightingName_DirLightmap(SurfaceOutput s, fixed4 color, fixed4 scale, half3 viewDir, bool surfFuncWritesNormal, out half3 specColor)
+    取决于视图方向,自动处理正向和延时光照路径
+
+光照模式的函数名为：Lighting+ [自定义函数名]
+
+pragma声明为： #pragmasurface surf  [自定义函数名]
+
+======LightingMode======
+0.Lambert: I = IaKa + IdKdconθ = Ia*Ka + Id*Kd(L·N)
+    Ia环境光强度 Ka材质对环境光的反射系数 Id漫反射光的强度 Kd材质对于漫反射光的反射系数 L光源方向向量 N法线方向向量
+1.Phong: I = Ia*Ka + Id*Kd(L·N) + Is*Ks(V·R)^n 其中: R = (2*N·V)*N - V
+    Is高光强度 Ks高光系数 V视线方向向量 R反射方向向量 n高光指数,越大越接近镜面

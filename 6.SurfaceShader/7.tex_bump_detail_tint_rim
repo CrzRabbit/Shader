@@ -48,5 +48,5 @@ Shader "Shader学习/SurfaceShader/tex_bump_detail_tint_rim"
         }
         ENDCG
     }
-    Fullback "Diffuse"
+    Fallback "Diffuse"
 }

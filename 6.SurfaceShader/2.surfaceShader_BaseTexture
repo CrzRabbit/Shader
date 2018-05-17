@@ -27,5 +27,5 @@ Shader "Shader学习/SurfaceShader/surfaceShader_BaseTexture"
         ENDCG
     }
 
-    Fullback "Diffuse"
+    Fallback "Diffuse"
 }
