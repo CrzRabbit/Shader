@@ -1,0 +1,44 @@
+Shader "Shader学习/LightingMode/customize_ramp_halfLambert"
+{
+    Properties
+    {
+        _MainTex("基础纹理", 2D) = "white" {}
+        _Ramp("渐变", 2D) = "gray" {}
+    }
+
+    SubShader
+    {
+        Tags {"RenderType" = "Opaque"}
+
+        CGPROGRAM
+
+        #program surface surf RampHalfLambert
+
+        sampler2D _Ramp;
+
+        half4 LightingRampHalfLambert(SurfaceOutput s, half3 lightDir, halfatten)
+        {
+            half nl = max(dot(s.Normal, lightDir));
+            half diff = nl * 0.5 + 0.5;
+            half3 ramp = tex2D(_Ramp, half2(diff, diff)).rgb;
+            half4 color;
+            color.rgb = s.Albedo * _LightColor0.rgb * ramp * atten * 2;
+            color.a = s.Alpha;
+            return color;
+        }
+
+        struct Input
+        {
+            float2 uv_MainTex;
+        }
+
+        sampler2D _MainTex;
+
+        void surf(Input IN, inout SurfaceOutput o)
+        {
+            o.Albedo = tex2D(_MainTex, IN.uv_MainTex).rgb;
+        }
+        ENDCG
+    }
+    Fallback "Diffuse"
+}

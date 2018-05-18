@@ -1,0 +1,40 @@
+Shader "Shader学习/LightingMode/customize_halfLambert"
+{
+    Properties
+    {
+        _MainTex("基础纹理", 2D) = "white" {}
+    }
+
+    SubShader
+    {
+        Tags {"RenderType" = "Opaque"}
+
+        CGPROGRAM
+
+        #program surface surf SampleHalfLambert
+
+        half4 LightingSampleHalfLambert(SurfaceOutput s, half3 lightDir, half atten)
+        {
+            half nl = max(dot(s.Normal, lightDir));
+            half hLambert = nl * 0.5 + 0.5;
+            half4 color;
+            color.rgb = s.Albedo * _LightColor0.rgb * (hLambert * atten * 2);
+            color.a = s.Alpha;
+            return color;
+        }
+
+        struct Input
+        {
+            float2 uv_MainTex;
+        }
+
+        sampler2D _MainTex;
+
+        void surf(Input IN, inout SurfaceOutput o)
+        {
+            o.Albedo = tex2D(_MainTex, IN.uv_MainTex).rgb
+        }
+        ENDCG
+    }
+    Fallback "Diffuse"
+}
