@@ -19,5 +19,5 @@ pragma声明为： #pragmasurface surf  [自定义函数名]
     Ia环境光强度 Ka材质对环境光的反射系数 Id漫反射光的强度 Kd材质对于漫反射光的反射系数 L光源方向向量 N法线方向向量
 1.Phong: I = Ia*Ka + Id*Kd(L·N) + Is*Ks(V·R)^n 其中: R = (2*N·L)*N - L
     Is高光强度 Ks高光系数 V视线方向向量 R反射方向向量 n高光指数,越大越接近镜面
-2.Blinn-Phong: I = Ks*II(N·H)^n
+2.Blinn-Phong: I = Ks*II(N·H)^  n
     H L和V中间单位向量
