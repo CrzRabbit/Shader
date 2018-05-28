@@ -11,7 +11,7 @@ Shader "Shader学习/SurfaceShader/surfaceShader_Palette"
 
         CGPROGRAM
 
-        #program surface surf Lambert
+        #pragma surface surf Lambert
 
         float4 _Color;
 

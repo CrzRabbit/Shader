@@ -14,7 +14,7 @@ Shader "Shader学习/SurfaceShader/surfaceShader_tex_bump_rim"
 
         CGPROGRAM
 
-        #program surface surf Lambert
+        #pragma surface surf Lambert
 
         struct Input
         {

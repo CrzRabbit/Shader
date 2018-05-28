@@ -11,7 +11,7 @@ Shader "Shader学习/LightingMode/customize_lambert"
 
         CGPROGRAM
 
-        #program surface surf SampleLambert
+        #pragma surface surf SampleLambert
 
         half4 LightingSampleLambert(SurfaceOutput s, float3 lightDir, float atten)
         {

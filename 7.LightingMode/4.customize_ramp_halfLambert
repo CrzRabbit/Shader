@@ -12,7 +12,7 @@ Shader "Shader学习/LightingMode/customize_ramp_halfLambert"
 
         CGPROGRAM
 
-        #program surface surf RampHalfLambert
+        #pragma surface surf RampHalfLambert
 
         sampler2D _Ramp;
 

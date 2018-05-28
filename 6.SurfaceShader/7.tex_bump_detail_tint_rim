@@ -16,7 +16,7 @@ Shader "Shader学习/SurfaceShader/tex_bump_detail_tint_rim"
 
         CGPROGMA
 
-        #progma surface surf finalcolor:setcolor
+        #pragma surface surf finalcolor:setcolor
 
         struct Input
         {

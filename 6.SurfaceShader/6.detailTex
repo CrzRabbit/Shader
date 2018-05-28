@@ -12,7 +12,7 @@ Shader "Shader学习/SurfaceShader/detailTex"
 
         CGPROGRAM
 
-        #progma surface surf
+        #pragma surface surf
 
         struct Input
         {

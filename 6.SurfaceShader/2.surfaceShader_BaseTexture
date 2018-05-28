@@ -11,7 +11,7 @@ Shader "Shader学习/SurfaceShader/surfaceShader_BaseTexture"
 
         CGPROGRAM
 
-        #program surface surf Lambert
+        #pragma surface surf Lambert
 
         struct Input
         {

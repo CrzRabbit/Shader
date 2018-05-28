@@ -15,7 +15,7 @@ Shader "Shader学习/SurfaceShader/surfaceShader_tex_bump_rim_palette"
 
         CGPROGRAM
 
-        #program surface surf finalcolor:setcolor
+        #pragma surface surf finalcolor:setcolor
 
         stru    ct Input
         {
