@@ -18,13 +18,13 @@ Shader "Unity/vertex_fragment_shaders/SimpleUnlitShader"
             {
                 fixed4 vertex : POSITION;
                 fixed2 uv : TEXCOORD0;
-            }
+            };
 
             struct v2f
             {
                 fixed4 vertex : SV_POSTION;
                 fixed2 uv : TEXCOORD0;
-            }
+            };
 
             v2f vert(appdata v)
             {

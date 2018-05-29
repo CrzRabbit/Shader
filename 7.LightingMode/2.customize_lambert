@@ -25,7 +25,7 @@ Shader "Shader学习/LightingMode/customize_lambert"
         struct Input
         {
             float2 uv_MainTex;
-        }
+        };
 
         sampler2D _MainTex;
 

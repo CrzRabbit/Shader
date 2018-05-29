@@ -16,7 +16,7 @@ Shader "Shader学习/SurfaceShader/surfaceShader_BaseTexture"
         struct Input
         {
             float2 uv_MainTex;
-        }
+        };
 
         sampler2D _MainTex;
 

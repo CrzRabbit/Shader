@@ -21,7 +21,7 @@ Shader "Shader学习/SurfaceShader/surfaceShader_tex_bump_rim"
             float2 uv_MainTex;
             float2 uv_BumpMap;
             float3 viewDir;
-        }
+        };
 
         sampler2D _MainTex;
         sampler2D _MainTex;

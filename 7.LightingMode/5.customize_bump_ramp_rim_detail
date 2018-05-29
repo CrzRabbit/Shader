@@ -44,7 +44,7 @@ Shader "Shader学习/LightingMode/customize_bump_ramp_rim_detail"
             float2 uv_BumpMap;
             float2 uv_Detail;
             float3 viewDir;
-        }
+        };
 
         void surf(Input IN, inout SurfaceOutput o)
         {
